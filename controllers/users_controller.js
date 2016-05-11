@@ -1,51 +1,56 @@
-'use strict'
-let mongoose = require('mongoose');
+'use strict';
+const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
+const secret = process.env.SECRET;
 let bcrypt = require('bcrypt');
-// Define the rounds/iterations the bcrypt key setup phase uses
-let SALT_WORK_FACTOR = 10;
+let mongoose = require('mongoose');
+// require model
+let User = require('../models/user');
 
-let userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  token: String,
-  created_at: Date,
-  updated_at: Date,
-  queries: []
-})
-// Before saving a password, make sure it is encrypted.
-userSchema.pre('save', function(next) {
-    let user = this;
-    console.log(user);
+let express = require('express');
+let router = express.Router();
 
-  // hash the password only if it's new or has been modified
-  if (!user.isModified('password')) return next();
+var userToken;
+// route to user auth
+router.route('/authenticate')
+  .post((req, res) => {
+    // let authenticateUser = function(){
+    console.log('hit /users/authenticate');
+    // console.log('req.body.user: ' + req.body);
+    // console.log('req.body.username: ' + req.body.username )
+  User.findOne({
+    username: req.body.username
+  }, function(err, user) {
+      console.log(req.body);
+      console.log('user: ' + user);
+      if (err) throw err;
+      // if unable to find the username in the app's database
+      if (user == undefined) {
 
-  // generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
-    if (err) return next(err);
+        res.json({ success: false, message: 'Authentication failed. User not found.'});
+      // if is a user in database
+      } else {
 
-    // hash the password and the newly generated salt
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) return next(err);
+        user.authenticate(req.body.password, function(err, isMatch) {
+          if (err) throw err;
+          if (isMatch) {
+            // send back a success message, a token, and all of the user data for user matching that username and password.
+            return res.send({message: "Password is good friend! Have a token buddy.", token: jwt.sign(user, secret), user: user});
+            //userToken = token;
+          } else {
 
-      // override cleartext password with hashed password
-      user.password = hash;
-      // console.log(user.password);
-      next();
-    });
-  });
-});
+            return res.send({message: "Password ain't right friend. No token(soup) for you!."});
+          }
+        }) //ends .authenticate
+      } //ends .findOne
+    });//ends authenticateUser
+});//ends .post
 
-// Implement password verification
-userSchema.methods.authenticate = function(password, callback) {
-  // compare method that returns a boolean
-  // Determine if the first argument once encrypted corres. to the second argument
-  bcrypt.compare(password, this.password, function(err, isMatch) {
-    if (err) return callback(err);
-    callback( null, isMatch);
+router.route('/signup')
+  .post((req, res) => {
+    let newUser = new User(req.body);
+    console.log(req.body);
+    newUser.save();
+  })
 
-  });
-};
-
-let User = mongoose.model('User', userSchema);
-module.exports = User;
+module.exports = router;
