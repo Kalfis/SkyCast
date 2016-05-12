@@ -8,6 +8,7 @@ $(function(){
   $('#my-profile').hide();
   $('#logout-link').hide();
   $('#login-failed').hide();
+  $('#profile-divider').hide();
 
   $('#signup-link').click((event) => {
     event.preventDefault();
@@ -75,7 +76,7 @@ $('#submit-login').click((event) => {
       // Show users the link to their profile
       $('#my-profile').show();
 
-      $('#welcome-divider').show();
+      $('#divider').hide();
       $('#profile-divider').show();
 
       $('#logout-link').show();
@@ -86,7 +87,7 @@ $('#submit-login').click((event) => {
       let welcomeUser = document.createElement('div');
       welcomeUser.id = "welcome-user";
       // user.username is something we sent in the post request, so it's still accessible using this syntax.
-      welcomeUser.innerHTML = '<p> Hi, ' + user.username;
+      welcomeUser.innerHTML = '<p> Welcome to SkyCast ' + user.username;
       // In /users/authenticate, we're retrieving user data associated with the username and password sent in the post method, then sending all user info back as part of "data"
       console.log('user._id: '+ data.user._id);
       // note that we have to use .append here, and not .appendChild
@@ -124,5 +125,10 @@ $('#submit-login').click((event) => {
   // what happens here with tokens--do I need to insert into header?
   })
 }); //ends login-submit button click event
+
+$('#logout-link').click((event) => {
+  event.preventDefault();
+
+})
 
 }) //close main anonymous function

@@ -15,10 +15,9 @@ var userToken;
 // route to user auth
 router.route('/authenticate')
   .post((req, res) => {
-    // let authenticateUser = function(){
+
     console.log('hit /users/authenticate');
-    // console.log('req.body.user: ' + req.body);
-    // console.log('req.body.username: ' + req.body.username )
+
   User.findOne({
     username: req.body.username
   }, function(err, user) {
@@ -91,5 +90,6 @@ router.use(function(req, res, next) {
       });
     }
   }); //ends router.use
+
 
 module.exports = router;
