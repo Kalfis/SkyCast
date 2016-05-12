@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 // Register our routes
 // all routes starting with /users will be in userRoutes
-app.use('/user', user);
+app.use('/users', user);
 
 let mongoose = require('mongoose');
 

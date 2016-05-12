@@ -1,0 +1,36 @@
+body {
+  background-image: url('http://s13.postimg.org/xg2qitsp3/Skycast.png');
+  background-repeat: repeat-y;
+  background-size: 100%;
+  font-family: helvetica;
+  text-align: center;
+  align-content: center;
+  margin: 25 px auto;
+}
+
+#login-form {
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+#user-actions {
+  align-items: center;
+}
+
+#signup-success {
+  width: 400px;
+  margin: 0 auto;
+}
+
+#signup-form {
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}

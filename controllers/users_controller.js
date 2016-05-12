@@ -11,6 +11,7 @@ let express = require('express');
 let router = express.Router();
 
 var userToken;
+
 // route to user auth
 router.route('/authenticate')
   .post((req, res) => {
@@ -52,5 +53,43 @@ router.route('/signup')
     console.log(req.body);
     newUser.save();
   })
+
+router.route('/:id')
+  .get((req, res, next) => {
+    console.log(req.headers.host);
+    User.find({ _id: req.params.id }, (err, user) => {
+      if (err) return next(err);
+      res.send(user);
+    }); //ends .find
+  })
+
+// === route middleware to verify a token
+router.use(function(req, res, next) {
+  console.log("user token: " + userToken);
+  // var token = req.query.token
+  var token = req.body.token || req.query.token || req.headers['Authorization'];
+  //console.log('req.query.token: ' + req.query.token);
+  console.log(token);
+  if (token) {
+    jwt.verify(token, secret, function(err, decoded) {
+      if (err) {
+        console.log('err' + err);
+        return res.json({ success: false, message: 'Failed to authenticate token.'});
+      } else {
+        req.decoded = decoded;
+        console.log('This is the secret, post decode: '+ secret);
+        //let's see what I'm setting to x-access-token in .all below--jwt is giving object Object, which means in line 10 it's not being set to the token... figure out how to access token within that...
+        console.log('jwt test: ' + jwt.sign);
+        next();
+      }
+    }); // ends jwt.verify
+    // if there is no token, return error.
+    } else {
+      return res.status(403).send({
+        success: false,
+        message: 'No token provided.'
+      });
+    }
+  }); //ends router.use
 
 module.exports = router;
