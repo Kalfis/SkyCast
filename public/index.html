@@ -19,23 +19,30 @@
     </br>
     <div id="user-welcome">
     </div>
-
-    <div id="signup-success"><p>Sign Up Successful! Log in:</p></div>
-
+    <div id="signup-success"><p>Sign Up Successful! Log In:</p></div>
     <form id="signup-form">
+
       <h3>Sign Up</h3>
-      <strong>Username: </strong><input id="signup-username" type="text"><br>
-      <strong>Password: </strong><input id="signup-password" type="text"></br>
+      <strong>Username: </strong><input id="signup-username" type="text" placeholder="Username"><br>
+      <strong>Password: </strong><input id="signup-password" type="password" placeholder="Password"></br>
       <button id="submit-signup">Sign Up</button>
     </form></br>
 
     <form id="login-form">
       <div id="login-failed"><p>Username or password not found. Please try again.</p></div>
       <h3>Log In</h3>
-      <strong>Username: </strong><input id="username-input" type="text" name="username"><br>
-      <strong> Password: </strong><input id="password-input" type="password" name="password"></br>
+      <strong>Username: </strong><input id="username-input" type="text" name="username" placeholder="Username"><br>
+      <strong>Password: </strong><input id="password-input" type="password" name="password" placeholder="Password"></br>
       <button id="submit-login">Submit</button>
     </form>
+
+
+    <form id="zip-search">
+      <strong>Search for Forecast by Zip:</strong><input id="zip" type="number" name="zip-code" placeholder="10010">
+      <button id="zip-submit">Search</button>
+    </form>
+
+
     <script type="text/javascript" src="js/app.js"></script>
   </body>
 </html>

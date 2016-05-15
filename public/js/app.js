@@ -9,6 +9,7 @@ $(function(){
   $('#logout-link').hide();
   $('#login-failed').hide();
   $('#profile-divider').hide();
+  $('#zip-search').hide();
 
   $('#signup-link').click((event) => {
     event.preventDefault();
@@ -23,7 +24,6 @@ $(function(){
     console.log('clicked submit for sign up');
     $('#signup-form').hide();
     $('#login-form').show();
-    $('#signup-success').show();
     let user = {};
     user.username = $('#signup-username').val();
     user.password = $('#signup-password').val();
@@ -32,6 +32,7 @@ $(function(){
         method: 'POST',
         data: user
       }) //closes sign up ajax
+      $('#signup-success').show();
   }) //closes sign up click event
 
   //Let user log in.
@@ -72,7 +73,7 @@ $('#submit-login').click((event) => {
       $('#login-form').hide();
       $('#login-link').hide();
       $('#signup-link').hide();
-
+      $('#zip-search').show();
       // Show users the link to their profile
       $('#my-profile').show();
 
@@ -99,14 +100,11 @@ $('#submit-login').click((event) => {
       currentUser.innerHTML = data.user._id;
       $('#user-actions').append(currentUser);
       $('#current-user').hide();
-      //
-
       // Once a user has logged in, they can click on a link to view their profiles.
       $('#my-profile').click((event) => {
         event.preventDefault();
         let myId = data.user._id
         console.log('myId: ' + myId);
-
         $.ajax({
           url: '/users/' + myId
           // /users/:id will return all user info for that id.
@@ -117,7 +115,6 @@ $('#submit-login').click((event) => {
            showUser(data);
         }) //ends .done
       }); //ends click event on my-profile link
-
     // if user is not granted token, give them a 'not found' message
     } else {
       $('#login-failed').show();
@@ -129,6 +126,13 @@ $('#submit-login').click((event) => {
 $('#logout-link').click((event) => {
   event.preventDefault();
 
+})
+
+$('#zip-submit').click((event) => {
+  event.preventDefault();
+  console.log('clicked zip search');
+  var zip = $('#zip').val();
+  console.log(zip)
 })
 
 }) //close main anonymous function

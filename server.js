@@ -32,4 +32,5 @@ let server = app.listen(process.env.PORT || 3000, () => {
   let port = server.address().port;
   console.log('express running', host, port);
   console.log(process.env.SECRET);
+  console.log(process.env.GOOGLEAPI);
 });
