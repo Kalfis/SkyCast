@@ -1,5 +1,5 @@
 'use strict';
-
+const GOOGLE_KEY = process.env.GOOGLEAPI
 $(function(){
 
   $('#signup-success').hide();
@@ -133,8 +133,10 @@ $('#zip-submit').click((event) => {
   console.log('clicked zip search');
   var zip = $('#zip').val();
   console.log(zip)
-    $ajax({
-      url: '/locations/zip'
+    $.ajax({
+      url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+zip+'&key='+GOOGLE_KEY
+    }).done(function(data){
+      console.log(data);
     })
 })
 
