@@ -133,6 +133,9 @@ $('#zip-submit').click((event) => {
   console.log('clicked zip search');
   var zip = $('#zip').val();
   console.log(zip)
+    $ajax({
+      url: '/locations/zip'
+    })
 })
 
 }) //close main anonymous function

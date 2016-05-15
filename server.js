@@ -7,6 +7,7 @@ let jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 let User = require('./models/user'); // get our mongoose model for user
 // require our routes
 let user = require('./controllers/users_controller');
+let location = require('./controllers/locations_controller');
 let app = express();
 
 app.use(logger('dev'));
@@ -14,8 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 // Register our routes
-// all routes starting with /users will be in userRoutes
 app.use('/users', user);
+app.use('/locations', location)
 
 let mongoose = require('mongoose');
 
