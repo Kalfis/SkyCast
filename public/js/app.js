@@ -1,5 +1,5 @@
 'use strict';
-const GOOGLE_KEY = process.env.GOOGLEAPI
+
 $(function(){
 
   $('#signup-success').hide();
