@@ -131,10 +131,12 @@ $('#logout-link').click((event) => {
 $('#zip-submit').click((event) => {
   event.preventDefault();
   console.log('clicked zip search');
-  var zip = $('#zip').val();
-  console.log(zip)
+  let zip = $('#zip').val();
+  //console.log(zip)
     $.ajax({
-      url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+zip+'&key='+GOOGLE_KEY
+      url: '/locations/zip',
+      method: "GET",
+      data: zip
     }).done(function(data){
       console.log(data);
     })
